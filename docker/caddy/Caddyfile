@@ -1,0 +1,7 @@
+http://localhost {
+	reverse_proxy web:3000
+	reverse_proxy /api/* api:5001
+	reverse_proxy /v1/* api:5001
+	reverse_proxy /files/* api:5001
+	reverse_proxy /console/api/* api:5001
+}

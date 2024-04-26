@@ -354,17 +354,32 @@ services:
 
   # The nginx reverse proxy.
   # used for reverse proxying the API service and Web service.
-  nginx:
-    image: nginx:latest
-    restart: always
+  # nginx:
+  #   image: nginx:latest
+  #   restart: always
+  #   volumes:
+  #     - ./nginx/nginx.conf:/etc/nginx/nginx.conf
+  #     - ./nginx/proxy.conf:/etc/nginx/proxy.conf
+  #     - ./nginx/conf.d:/etc/nginx/conf.d
+  #     #- ./nginx/ssl:/etc/ssl
+  #   depends_on:
+  #     - api
+  #     - web
+  #   ports:
+  #     - "80:80"
+  #     #- "443:443"
+
+  # The caddy reverse proxy.
+  # used for reverse proxying the API service and Web service.
+  caddy:
+    image: caddy:latest
+    restart: unless-stopped
     volumes:
-      - ./nginx/nginx.conf:/etc/nginx/nginx.conf
-      - ./nginx/proxy.conf:/etc/nginx/proxy.conf
-      - ./nginx/conf.d:/etc/nginx/conf.d
-      #- ./nginx/ssl:/etc/ssl
+      - ./caddy/Caddyfile:/etc/caddy/Caddyfile
+      - ./caddy/data:/data
     depends_on:
       - api
       - web
     ports:
       - "80:80"
-      #- "443:443"
+      # - "443:443"
